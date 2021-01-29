@@ -13,7 +13,7 @@ def create_binary_tree():
 
     branch2 = BinaryTree(6)
     branch2.left = leaf3
-    branch2.left = leaf4
+    branch2.right = leaf4
 
     root = BinaryTree(4)
     root.left = branch
