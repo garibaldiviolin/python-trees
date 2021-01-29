@@ -18,3 +18,5 @@ def create_binary_tree():
     root = BinaryTree(4)
     root.left = branch
     root.right = branch2
+
+    return root
