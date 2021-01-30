@@ -8,6 +8,7 @@ from trees.binary_trees import (
     pre_order_traversal,
     in_order_traversal,
     binary_tree_search,
+    tree_add,
 )
 
 
@@ -70,3 +71,28 @@ class TestBinaryTreeSearch(TestCase):
         self.binary_tree.right.right.value = 8  # replace 7 to test
         found = binary_tree_search(self.binary_tree, 7)
         self.assertFalse(found)
+
+
+class TestBinaryTreeAdd(TestCase):
+    def setUp(self):
+        self.binary_tree = create_binary_tree()
+
+    @patch("builtins.print")
+    def test_add_left(self, print_mock):
+        self.binary_tree.right.right.value = 8  # replace 7 to test
+        tree_add(self.binary_tree, 7)
+        in_order_traversal(self.binary_tree)
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(1, 9)]
+        )
+
+    @patch("builtins.print")
+    def test_add_right(self, print_mock):
+        self.binary_tree.left.left.value = 0  # replace 1 to test
+        tree_add(self.binary_tree, 1)
+        in_order_traversal(self.binary_tree)
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(0, 8)]
+        )

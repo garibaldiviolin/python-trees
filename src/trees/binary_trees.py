@@ -51,3 +51,14 @@ def binary_tree_search(tree, value):
         return binary_tree_search(tree.left, value)
 
     return False
+
+
+def tree_add(tree, value):
+    if tree.value < value:
+        if tree.right is not None:
+            return tree_add(tree.right, value)
+        tree.right = BinaryTree(value)
+    else:
+        if tree.left is not None:
+            return tree_add(tree.left, value)
+        tree.left = BinaryTree(value)
