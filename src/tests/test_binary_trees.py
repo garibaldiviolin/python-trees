@@ -78,13 +78,15 @@ class TestBinaryTreeSearch(TestCase):
         self.binary_tree = create_binary_tree()
 
     def test_binary_tree_search_with_existing_value(self):
-        found = BinaryTree.binary_tree_search(self.binary_tree, 1)
-        self.assertTrue(found)
+        expected_leaf = self.binary_tree.left.left
+        found, leaf = BinaryTree.binary_tree_search(self.binary_tree, 1)
+        self.assertEqual((found, leaf), (True, expected_leaf))
+        self.assertEqual(expected_leaf.value, 1)
 
     def test_binary_tree_search_with_inexistent_value(self):
         self.binary_tree.right.right.value = 8  # replace 7 to test
-        found = BinaryTree.binary_tree_search(self.binary_tree, 7)
-        self.assertFalse(found)
+        found, leaf = BinaryTree.binary_tree_search(self.binary_tree, 7)
+        self.assertEqual((found, leaf), (False, None))
 
     @patch("trees.binary_trees.BinaryTree.binary_tree_search")
     def test_search(self, binary_tree_search_mock):

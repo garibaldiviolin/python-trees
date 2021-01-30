@@ -53,13 +53,13 @@ class BinaryTree:
     @staticmethod
     def binary_tree_search(tree, value):
         if tree.value == value:
-            return True
+            return True, tree
         if tree.value < value and tree.right is not None:
             return BinaryTree.binary_tree_search(tree.right, value)
         elif tree.value > value and tree.left is not None:
             return BinaryTree.binary_tree_search(tree.left, value)
 
-        return False
+        return False, None
 
     def search(self, value):
         return BinaryTree.binary_tree_search(self, value)
