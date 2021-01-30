@@ -2,7 +2,23 @@ from unittest import TestCase
 from unittest.mock import call, patch
 
 from .fixtures import create_binary_tree
-from trees.binary_trees import BinaryTree
+from trees.binary_trees import BinaryTree, BinaryTreeNode
+
+
+class TestBinaryTreeNodeClass(TestCase):
+    def setUp(self):
+        self.binary_tree = BinaryTreeNode(2)
+
+    def test_instance(self):
+        self.assertIsNone(self.binary_tree.left)
+        self.assertIsNone(self.binary_tree.right)
+        self.assertEqual(self.binary_tree.value, 2)
+
+    def test_repr(self):
+        self.assertEqual(repr(self.binary_tree), "BinaryTreeNode(2)")
+
+    def test_str(self):
+        self.assertEqual(str(self.binary_tree), "2")
 
 
 class TestBinaryTreeClass(TestCase):
