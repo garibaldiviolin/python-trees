@@ -77,3 +77,12 @@ class BinaryTree:
 
     def add(self, value):
         return BinaryTree.tree_add(self, value)
+
+    @staticmethod
+    def tree_max_value(tree):
+        if tree.right is not None:
+            return BinaryTree.tree_max_value(tree.right)
+        return tree
+
+    def max_value(self):
+        return BinaryTree.tree_max_value(self)
