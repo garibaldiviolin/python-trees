@@ -11,54 +11,69 @@ class BinaryTree:
     def __str__(self):
         return str(self.value)
 
-
-def in_order_traversal(tree):
-    if tree.left is not None:
-        in_order_traversal(tree.left)
-
-    print(tree.value, end="-")
-
-    if tree.right is not None:
-        in_order_traversal(tree.right)
-
-
-def pre_order_traversal(tree):
-    print(tree.value, end="-")
-
-    if tree.left is not None:
-        pre_order_traversal(tree.left)
-
-    if tree.right is not None:
-        pre_order_traversal(tree.right)
-
-
-def post_order_traversal(tree):
-    if tree.left is not None:
-        post_order_traversal(tree.left)
-
-    if tree.right is not None:
-        post_order_traversal(tree.right)
-
-    print(tree.value, end="-")
-
-
-def binary_tree_search(tree, value):
-    if tree.value == value:
-        return True
-    if tree.value < value and tree.right is not None:
-        return binary_tree_search(tree.right, value)
-    elif tree.value > value and tree.left is not None:
-        return binary_tree_search(tree.left, value)
-
-    return False
-
-
-def tree_add(tree, value):
-    if tree.value < value:
-        if tree.right is not None:
-            return tree_add(tree.right, value)
-        tree.right = BinaryTree(value)
-    else:
+    @staticmethod
+    def tree_in_order_traversal(tree):
         if tree.left is not None:
-            return tree_add(tree.left, value)
-        tree.left = BinaryTree(value)
+            BinaryTree.tree_in_order_traversal(tree.left)
+
+        print(tree.value, end="-")
+
+        if tree.right is not None:
+            BinaryTree.tree_in_order_traversal(tree.right)
+
+    def in_order_traversal(self):
+        BinaryTree.tree_in_order_traversal(self)
+
+    @staticmethod
+    def tree_pre_order_traversal(tree):
+        print(tree.value, end="-")
+
+        if tree.left is not None:
+            BinaryTree.tree_pre_order_traversal(tree.left)
+
+        if tree.right is not None:
+            BinaryTree.tree_pre_order_traversal(tree.right)
+
+    def pre_order_traversal(self):
+        BinaryTree.tree_pre_order_traversal(self)
+
+    @staticmethod
+    def tree_post_order_traversal(tree):
+        if tree.left is not None:
+            BinaryTree.tree_post_order_traversal(tree.left)
+
+        if tree.right is not None:
+            BinaryTree.tree_post_order_traversal(tree.right)
+
+        print(tree.value, end="-")
+
+    def post_order_traversal(self):
+        BinaryTree.tree_post_order_traversal(self)
+
+    @staticmethod
+    def binary_tree_search(tree, value):
+        if tree.value == value:
+            return True
+        if tree.value < value and tree.right is not None:
+            return BinaryTree.binary_tree_search(tree.right, value)
+        elif tree.value > value and tree.left is not None:
+            return BinaryTree.binary_tree_search(tree.left, value)
+
+        return False
+
+    def search(self, value):
+        return BinaryTree.binary_tree_search(self, value)
+
+    @staticmethod
+    def tree_add(tree, value):
+        if tree.value < value:
+            if tree.right is not None:
+                return BinaryTree.tree_add(tree.right, value)
+            tree.right = BinaryTree(value)
+        else:
+            if tree.left is not None:
+                return BinaryTree.tree_add(tree.left, value)
+            tree.left = BinaryTree(value)
+
+    def add(self, value):
+        return BinaryTree.tree_add(self, value)
