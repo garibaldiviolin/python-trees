@@ -23,12 +23,11 @@ class TestBinaryTreeNodeClass(TestCase):
 
 class TestBinaryTreeClass(TestCase):
     def setUp(self):
-        self.binary_tree = BinaryTree(2)
+        self.binary_tree_node = BinaryTreeNode(2)
+        self.binary_tree = BinaryTree(self.binary_tree_node)
 
     def test_instance(self):
-        self.assertIsNone(self.binary_tree.left)
-        self.assertIsNone(self.binary_tree.right)
-        self.assertEqual(self.binary_tree.value, 2)
+        self.assertEqual(self.binary_tree.root, self.binary_tree_node)
 
     def test_repr(self):
         self.assertEqual(repr(self.binary_tree), "BinaryTree(2)")
@@ -43,7 +42,7 @@ class TestBinaryTreeTraversal(TestCase):
 
     @patch("builtins.print")
     def test_post_order_traversal(self, print_mock):
-        BinaryTree.post_order_traversal(self.binary_tree)
+        BinaryTree.tree_post_order_traversal(self.binary_tree.root)
         values_order = [1, 3, 2, 5, 7, 6, 4]
         self.assertEqual(
             print_mock.mock_calls,
@@ -54,12 +53,12 @@ class TestBinaryTreeTraversal(TestCase):
     def test_tree_post_order_traversal(self, tree_post_order_traversal_mock):
         self.binary_tree.post_order_traversal()
         tree_post_order_traversal_mock.assert_called_once_with(
-            self.binary_tree
+            self.binary_tree.root
         )
 
     @patch("builtins.print")
     def test_pre_order_traversal(self, print_mock):
-        BinaryTree.tree_pre_order_traversal(self.binary_tree)
+        BinaryTree.tree_pre_order_traversal(self.binary_tree.root)
         values_order = [4, 2, 1, 3, 6, 5, 7]
         self.assertEqual(
             print_mock.mock_calls,
@@ -70,12 +69,12 @@ class TestBinaryTreeTraversal(TestCase):
     def test_tree_pre_order_traversal(self, tree_pre_order_traversal_mock):
         self.binary_tree.pre_order_traversal()
         tree_pre_order_traversal_mock.assert_called_once_with(
-            self.binary_tree
+            self.binary_tree.root
         )
 
     @patch("builtins.print")
     def test_in_order_traversal(self, print_mock):
-        BinaryTree.tree_in_order_traversal(self.binary_tree)
+        BinaryTree.tree_in_order_traversal(self.binary_tree.root)
         self.assertEqual(
             print_mock.mock_calls,
             [call(number, end="-") for number in range(1, 8)]
@@ -85,7 +84,7 @@ class TestBinaryTreeTraversal(TestCase):
     def test_tree_in_order_traversal(self, tree_in_order_traversal_mock):
         self.binary_tree.in_order_traversal()
         tree_in_order_traversal_mock.assert_called_once_with(
-            self.binary_tree
+            self.binary_tree.root
         )
 
 
@@ -94,20 +93,23 @@ class TestBinaryTreeSearch(TestCase):
         self.binary_tree = create_binary_tree()
 
     def test_binary_tree_search_with_existing_value(self):
-        expected_leaf = self.binary_tree.left.left
-        found, leaf = BinaryTree.binary_tree_search(self.binary_tree, 1)
+        expected_leaf = self.binary_tree.root.left.left
+        found, leaf = BinaryTree.binary_tree_search(self.binary_tree.root, 1)
         self.assertEqual((found, leaf), (True, expected_leaf))
         self.assertEqual(expected_leaf.value, 1)
 
     def test_binary_tree_search_with_inexistent_value(self):
-        self.binary_tree.right.right.value = 8  # replace 7 to test
-        found, leaf = BinaryTree.binary_tree_search(self.binary_tree, 7)
+        self.binary_tree.root.right.right.value = 8  # replace 7 to test
+        found, leaf = BinaryTree.binary_tree_search(self.binary_tree.root, 7)
         self.assertEqual((found, leaf), (False, None))
 
     @patch("trees.binary_trees.BinaryTree.binary_tree_search")
     def test_search(self, binary_tree_search_mock):
         self.binary_tree.search(7)
-        binary_tree_search_mock.assert_called_once_with(self.binary_tree, 7)
+        binary_tree_search_mock.assert_called_once_with(
+            self.binary_tree.root,
+            7,
+        )
 
 
 class TestBinaryTreeAdd(TestCase):
@@ -116,9 +118,9 @@ class TestBinaryTreeAdd(TestCase):
 
     @patch("builtins.print")
     def test_tree_add_left(self, print_mock):
-        self.binary_tree.right.right.value = 8  # replace 7 to test
-        BinaryTree.tree_add(self.binary_tree, 7)
-        BinaryTree.tree_in_order_traversal(self.binary_tree)
+        self.binary_tree.root.right.right.value = 8  # replace 7 to test
+        BinaryTree.tree_add(self.binary_tree.root, 7)
+        BinaryTree.tree_in_order_traversal(self.binary_tree.root)
         self.assertEqual(
             print_mock.mock_calls,
             [call(number, end="-") for number in range(1, 9)]
@@ -126,9 +128,9 @@ class TestBinaryTreeAdd(TestCase):
 
     @patch("builtins.print")
     def test_tree_add_right(self, print_mock):
-        self.binary_tree.left.left.value = 0  # replace 1 to test
-        BinaryTree.tree_add(self.binary_tree, 1)
-        BinaryTree.tree_in_order_traversal(self.binary_tree)
+        self.binary_tree.root.left.left.value = 0  # replace 1 to test
+        BinaryTree.tree_add(self.binary_tree.root, 1)
+        BinaryTree.tree_in_order_traversal(self.binary_tree.root)
         self.assertEqual(
             print_mock.mock_calls,
             [call(number, end="-") for number in range(0, 8)]
@@ -137,7 +139,7 @@ class TestBinaryTreeAdd(TestCase):
     @patch("trees.binary_trees.BinaryTree.tree_add")
     def test_search(self, tree_add_mock):
         self.binary_tree.add(7)
-        tree_add_mock.assert_called_once_with(self.binary_tree, 7)
+        tree_add_mock.assert_called_once_with(self.binary_tree.root, 7)
 
 
 class TestBinaryTreeMaxValue(TestCase):
@@ -145,12 +147,12 @@ class TestBinaryTreeMaxValue(TestCase):
         self.binary_tree = create_binary_tree()
 
     def test_tree_max_value(self):
-        max_leaf = BinaryTree.tree_max_value(self.binary_tree)
+        max_leaf = BinaryTree.tree_max_value(self.binary_tree.root)
         self.assertEqual(max_leaf.value, 7)
 
     def test_tree_max_value_with_single_value(self):
-        single_value_tree = BinaryTree(50)
-        max_leaf = BinaryTree.tree_max_value(single_value_tree)
+        single_value_tree = BinaryTree(BinaryTreeNode(50))
+        max_leaf = BinaryTree.tree_max_value(single_value_tree.root)
         self.assertEqual(max_leaf.value, 50)
 
     @patch("trees.binary_trees.BinaryTree.tree_max_value")
@@ -160,4 +162,4 @@ class TestBinaryTreeMaxValue(TestCase):
         return_value = self.binary_tree.max_value()
 
         self.assertEqual(expected_return_value, return_value)
-        tree_max_value_mock.assert_called_once_with(self.binary_tree)
+        tree_max_value_mock.assert_called_once_with(self.binary_tree.root)

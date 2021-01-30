@@ -1,22 +1,24 @@
-from trees.binary_trees import BinaryTree
+from trees.binary_trees import BinaryTree, BinaryTreeNode
 
 
 def create_binary_tree():
-    leaf = BinaryTree(1)
-    leaf2 = BinaryTree(3)
-    leaf3 = BinaryTree(5)
-    leaf4 = BinaryTree(7)
+    leaf = BinaryTreeNode(1)
+    leaf2 = BinaryTreeNode(3)
+    leaf3 = BinaryTreeNode(5)
+    leaf4 = BinaryTreeNode(7)
 
-    branch = BinaryTree(2)
+    branch = BinaryTreeNode(2)
     branch.left = leaf
     branch.right = leaf2
 
-    branch2 = BinaryTree(6)
+    branch2 = BinaryTreeNode(6)
     branch2.left = leaf3
     branch2.right = leaf4
 
-    root = BinaryTree(4)
+    root = BinaryTreeNode(4)
     root.left = branch
     root.right = branch2
 
-    return root
+    tree = BinaryTree(root)
+
+    return tree
