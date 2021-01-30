@@ -7,6 +7,7 @@ from trees.binary_trees import (
     post_order_traversal,
     pre_order_traversal,
     in_order_traversal,
+    binary_tree_search,
 )
 
 
@@ -55,3 +56,17 @@ class TestBinaryTreeTraversal(TestCase):
             print_mock.mock_calls,
             [call(number, end="-") for number in range(1, 8)]
         )
+
+
+class TestBinaryTreeSearch(TestCase):
+    def setUp(self):
+        self.binary_tree = create_binary_tree()
+
+    def test_binary_tree_search_with_existing_value(self):
+        found = binary_tree_search(self.binary_tree, 1)
+        self.assertTrue(found)
+
+    def test_binary_tree_search_with_inexistent_value(self):
+        self.binary_tree.right.right.value = 8  # replace 7 to test
+        found = binary_tree_search(self.binary_tree, 7)
+        self.assertFalse(found)

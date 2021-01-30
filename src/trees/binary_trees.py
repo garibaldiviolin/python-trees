@@ -40,3 +40,14 @@ def post_order_traversal(tree):
         post_order_traversal(tree.right)
 
     print(tree.value, end="-")
+
+
+def binary_tree_search(tree, value):
+    if tree.value == value:
+        return True
+    if tree.value < value and tree.right is not None:
+        return binary_tree_search(tree.right, value)
+    elif tree.value > value and tree.left is not None:
+        return binary_tree_search(tree.left, value)
+
+    return False
