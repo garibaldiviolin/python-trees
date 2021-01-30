@@ -24,7 +24,7 @@ class TestBinaryTreeClass(TestCase):
         self.assertEqual(repr(self.binary_tree), "BinaryTree(2)")
 
     def test_str(self):
-        self.assertEqual(repr(self.binary_tree), "BinaryTree(2)")
+        self.assertEqual(str(self.binary_tree), "2")
 
 
 class TestBinaryTreeTraversal(TestCase):
