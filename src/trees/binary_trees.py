@@ -1,4 +1,4 @@
-class BinaryTreeNode:
+class BinarySearchTreeNode:
     left = None
     right = None
 
@@ -12,7 +12,7 @@ class BinaryTreeNode:
         return str(self.value)
 
 
-class BinaryTree:
+class BinarySearchTree:
     def __init__(self, root):
         self.root = root
 
@@ -25,41 +25,41 @@ class BinaryTree:
     @staticmethod
     def tree_in_order_traversal(tree):
         if tree.left is not None:
-            BinaryTree.tree_in_order_traversal(tree.left)
+            BinarySearchTree.tree_in_order_traversal(tree.left)
 
         print(tree.value, end="-")
 
         if tree.right is not None:
-            BinaryTree.tree_in_order_traversal(tree.right)
+            BinarySearchTree.tree_in_order_traversal(tree.right)
 
     def in_order_traversal(self):
-        BinaryTree.tree_in_order_traversal(self.root)
+        BinarySearchTree.tree_in_order_traversal(self.root)
 
     @staticmethod
     def tree_pre_order_traversal(tree):
         print(tree.value, end="-")
 
         if tree.left is not None:
-            BinaryTree.tree_pre_order_traversal(tree.left)
+            BinarySearchTree.tree_pre_order_traversal(tree.left)
 
         if tree.right is not None:
-            BinaryTree.tree_pre_order_traversal(tree.right)
+            BinarySearchTree.tree_pre_order_traversal(tree.right)
 
     def pre_order_traversal(self):
-        BinaryTree.tree_pre_order_traversal(self.root)
+        BinarySearchTree.tree_pre_order_traversal(self.root)
 
     @staticmethod
     def tree_post_order_traversal(tree):
         if tree.left is not None:
-            BinaryTree.tree_post_order_traversal(tree.left)
+            BinarySearchTree.tree_post_order_traversal(tree.left)
 
         if tree.right is not None:
-            BinaryTree.tree_post_order_traversal(tree.right)
+            BinarySearchTree.tree_post_order_traversal(tree.right)
 
         print(tree.value, end="-")
 
     def post_order_traversal(self):
-        BinaryTree.tree_post_order_traversal(self.root)
+        BinarySearchTree.tree_post_order_traversal(self.root)
 
     @staticmethod
     def binary_tree_search(tree, direction, value):
@@ -67,37 +67,41 @@ class BinaryTree:
         if sub_tree.value == value:
             return True, tree, direction
         if sub_tree.value < value and sub_tree.right is not None:
-            return BinaryTree.binary_tree_search(sub_tree, "right", value)
+            return BinarySearchTree.binary_tree_search(
+                sub_tree,
+                "right",
+                value,
+            )
         elif sub_tree.value > value and sub_tree.left is not None:
-            return BinaryTree.binary_tree_search(sub_tree, "left", value)
+            return BinarySearchTree.binary_tree_search(sub_tree, "left", value)
 
         return False, None, None
 
     def search(self, value):
-        return BinaryTree.binary_tree_search(self, "root", value)
+        return BinarySearchTree.binary_tree_search(self, "root", value)
 
     @staticmethod
     def tree_add(tree, value):
         if tree.value < value:
             if tree.right is not None:
-                return BinaryTree.tree_add(tree.right, value)
-            tree.right = BinaryTreeNode(value)
+                return BinarySearchTree.tree_add(tree.right, value)
+            tree.right = BinarySearchTreeNode(value)
         else:
             if tree.left is not None:
-                return BinaryTree.tree_add(tree.left, value)
-            tree.left = BinaryTreeNode(value)
+                return BinarySearchTree.tree_add(tree.left, value)
+            tree.left = BinarySearchTreeNode(value)
 
     def add(self, value):
-        return BinaryTree.tree_add(self.root, value)
+        return BinarySearchTree.tree_add(self.root, value)
 
     @staticmethod
     def tree_max_value(tree):
         if tree.right is not None:
-            return BinaryTree.tree_max_value(tree.right)
+            return BinarySearchTree.tree_max_value(tree.right)
         return tree
 
     def max_value(self):
-        return BinaryTree.tree_max_value(self.root)
+        return BinarySearchTree.tree_max_value(self.root)
 
     def remove(self, value):
         found, parent, direction = self.search(value)
