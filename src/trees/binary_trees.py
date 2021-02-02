@@ -62,18 +62,19 @@ class BinaryTree:
         BinaryTree.tree_post_order_traversal(self.root)
 
     @staticmethod
-    def binary_tree_search(tree, value):
-        if tree.value == value:
-            return True, tree
-        if tree.value < value and tree.right is not None:
-            return BinaryTree.binary_tree_search(tree.right, value)
-        elif tree.value > value and tree.left is not None:
-            return BinaryTree.binary_tree_search(tree.left, value)
+    def binary_tree_search(tree, direction, value):
+        sub_tree = getattr(tree, direction)
+        if sub_tree.value == value:
+            return True, tree, direction
+        if sub_tree.value < value and sub_tree.right is not None:
+            return BinaryTree.binary_tree_search(sub_tree, "right", value)
+        elif sub_tree.value > value and sub_tree.left is not None:
+            return BinaryTree.binary_tree_search(sub_tree, "left", value)
 
-        return False, None
+        return False, None, None
 
     def search(self, value):
-        return BinaryTree.binary_tree_search(self.root, value)
+        return BinaryTree.binary_tree_search(self, "root", value)
 
     @staticmethod
     def tree_add(tree, value):

@@ -92,23 +92,48 @@ class TestBinaryTreeSearch(TestCase):
     def setUp(self):
         self.binary_tree = create_binary_tree()
 
-    def test_binary_tree_search_with_existing_value(self):
-        expected_leaf = self.binary_tree.root.left.left
-        found, leaf = BinaryTree.binary_tree_search(self.binary_tree.root, 1)
-        self.assertEqual((found, leaf), (True, expected_leaf))
-        self.assertEqual(expected_leaf.value, 1)
+    def test_binary_tree_search_in_left_subtree(self):
+        expected_leaf = self.binary_tree.root.left
+        found, parent, direction = BinaryTree.binary_tree_search(
+            self.binary_tree,
+            "root",
+            1,
+        )
+        found_node = getattr(parent, direction)
+        self.assertEqual(
+            (found, parent, direction),
+            (True, expected_leaf, "left")
+        )
+        self.assertEqual(found_node.value, 1)
+
+    def test_binary_tree_search_in_right_subtree(self):
+        expected_leaf = self.binary_tree.root.right
+        found, parent, direction = BinaryTree.binary_tree_search(
+            self.binary_tree,
+            "root",
+            7,
+        )
+        found_node = getattr(parent, direction)
+        self.assertEqual(
+            (found, parent, direction),
+            (True, expected_leaf, "right")
+        )
+        self.assertEqual(found_node.value, 7)
 
     def test_binary_tree_search_with_inexistent_value(self):
         self.binary_tree.root.right.right.value = 8  # replace 7 to test
-        found, leaf = BinaryTree.binary_tree_search(self.binary_tree.root, 7)
-        self.assertEqual((found, leaf), (False, None))
+        found, parent, direction = BinaryTree.binary_tree_search(
+            self.binary_tree,
+            "root",
+            7,
+        )
+        self.assertEqual((found, parent, direction), (False, None, None))
 
     @patch("trees.binary_trees.BinaryTree.binary_tree_search")
     def test_search(self, binary_tree_search_mock):
         self.binary_tree.search(7)
         binary_tree_search_mock.assert_called_once_with(
-            self.binary_tree.root,
-            7,
+            self.binary_tree, "root", 7
         )
 
 
