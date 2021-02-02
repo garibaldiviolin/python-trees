@@ -163,3 +163,65 @@ class TestBinaryTreeMaxValue(TestCase):
 
         self.assertEqual(expected_return_value, return_value)
         tree_max_value_mock.assert_called_once_with(self.binary_tree.root)
+
+
+class TestBinaryTreeRemove(TestCase):
+    def setUp(self):
+        self.binary_tree = create_binary_tree()
+
+    def test_remove_value_not_found(self):
+        removed = self.binary_tree.remove(1000)
+        self.assertFalse(removed)
+
+    def test_remove_single_node_tree(self):
+        root = BinaryTreeNode(50)
+        binary_tree = BinaryTree(root)
+        binary_tree.remove(50)
+        self.assertIsNone(binary_tree.root)
+
+    @patch("builtins.print")
+    def test_remove_node_without_children(self, print_mock):
+        self.binary_tree.remove(1)
+        self.binary_tree.in_order_traversal()
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(2, 8)]
+        )
+
+    @patch("builtins.print")
+    def test_remove_node_with_only_left_child(self, print_mock):
+        self.binary_tree.root.left.right = None  # Remove value 3
+        self.binary_tree.remove(2)
+        self.binary_tree.in_order_traversal()
+        self.assertEqual(
+            print_mock.mock_calls,
+            [
+                call(number, end="-") for number in range(1, 8)
+                if number not in (2, 3)
+            ]
+        )
+
+    @patch("builtins.print")
+    def test_remove_node_with_only_right_child(self, print_mock):
+        self.binary_tree.root.left.left = None  # Remove value 1
+        self.binary_tree.remove(2)
+        self.binary_tree.in_order_traversal()
+        self.assertEqual(
+            print_mock.mock_calls,
+            [
+                call(number, end="-") for number in range(1, 8)
+                if number not in (1, 2)
+            ]
+        )
+
+    @patch("builtins.print")
+    def test_remove_node_with_both_children(self, print_mock):
+        self.binary_tree.remove(4)
+        self.binary_tree.in_order_traversal()
+        self.assertEqual(
+            print_mock.mock_calls,
+            [
+                call(number, end="-") for number in range(1, 8)
+                if number != 4
+            ]
+        )

@@ -97,3 +97,40 @@ class BinaryTree:
 
     def max_value(self):
         return BinaryTree.tree_max_value(self.root)
+
+    def remove(self, value):
+        parent = self
+        current_node = self.root
+        direction = "root"
+        while current_node and current_node.value != value:
+            parent = current_node
+            if current_node.value > value:
+                current_node = current_node.left
+                direction = "left"
+            else:
+                current_node = current_node.right
+                direction = "right"
+
+        if not current_node:
+            return False
+
+        if not current_node.left:
+            setattr(parent, direction, current_node.right)
+        elif not current_node.right:
+            setattr(parent, direction, current_node.left)
+        else:
+            in_order_successor = current_node.left
+            successor_parent = current_node
+            successor_parent_direction = "left"
+            while in_order_successor.right:
+                successor_parent = in_order_successor
+                in_order_successor = in_order_successor.right
+                successor_parent_direction = "right"
+            current_node.value = in_order_successor.value
+
+            setattr(
+                successor_parent,
+                successor_parent_direction,
+                in_order_successor.left
+            )
+        return True
