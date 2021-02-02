@@ -100,21 +100,12 @@ class BinaryTree:
         return BinaryTree.tree_max_value(self.root)
 
     def remove(self, value):
-        parent = self
-        current_node = self.root
-        direction = "root"
-        while current_node and current_node.value != value:
-            parent = current_node
-            if current_node.value > value:
-                current_node = current_node.left
-                direction = "left"
-            else:
-                current_node = current_node.right
-                direction = "right"
+        found, parent, direction = self.search(value)
 
-        if not current_node:
+        if not found:
             return False
 
+        current_node = getattr(parent, direction)
         if not current_node.left:
             setattr(parent, direction, current_node.right)
         elif not current_node.right:
