@@ -130,3 +130,8 @@ class BinarySearchTree:
         node_left.right = node_right.left
         node_right.left = node_left
         setattr(parent, direction, node_right)
+
+    def rotate_right(self, parent, direction, node_left, node_right):
+        node_right.left = node_left.right
+        node_left.right = node_right
+        setattr(parent, direction, node_left)

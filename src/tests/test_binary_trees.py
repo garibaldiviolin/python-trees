@@ -287,3 +287,28 @@ class TestBinarySearchTreeRotateLeft(TestCase):
             print_mock.mock_calls,
             [call(number, end="-") for number in range(1, 8)]
         )
+
+
+class TestBinarySearchTreeRotateRight(TestCase):
+    def setUp(self):
+        self.binary_tree = create_binary_tree()
+
+    @patch("builtins.print")
+    def test_rotate_root_right(self, print_mock):
+        left_node = self.binary_tree.root.left
+        right_node = self.binary_tree.root
+
+        self.binary_tree.rotate_right(
+            self.binary_tree,
+            "root",
+            left_node,
+            right_node,
+        )
+        self.assertEqual(self.binary_tree.root, left_node)
+        self.assertEqual(self.binary_tree.root.right, right_node)
+
+        self.binary_tree.in_order_traversal()
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(1, 8)]
+        )
