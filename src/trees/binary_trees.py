@@ -95,13 +95,17 @@ class BinarySearchTree:
         return BinarySearchTree.tree_add(self.root, value)
 
     @staticmethod
-    def tree_max_value(tree):
-        if tree.right is not None:
-            return BinarySearchTree.tree_max_value(tree.right)
-        return tree
+    def tree_max_value(parent, direction):
+        node = getattr(parent, direction)
+        while node.right:
+            parent = node
+            node = node.right
+            direction = "right"
+
+        return parent, direction, node
 
     def max_value(self):
-        return BinarySearchTree.tree_max_value(self.root)
+        return BinarySearchTree.tree_max_value(self, "root")
 
     def remove(self, value):
         found, parent, direction = self.search(value)
@@ -115,18 +119,9 @@ class BinarySearchTree:
         elif not current_node.right:
             setattr(parent, direction, current_node.left)
         else:
-            in_order_successor = current_node.left
-            successor_parent = current_node
-            successor_parent_direction = "left"
-            while in_order_successor.right:
-                successor_parent = in_order_successor
-                in_order_successor = in_order_successor.right
-                successor_parent_direction = "right"
-            current_node.value = in_order_successor.value
-
-            setattr(
-                successor_parent,
-                successor_parent_direction,
-                in_order_successor.left
+            parent, direction, successor = BinarySearchTree.tree_max_value(
+                current_node, "left"
             )
+            current_node.value = successor.value
+            setattr(parent, direction, successor.left)
         return True

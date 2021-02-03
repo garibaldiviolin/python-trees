@@ -172,13 +172,22 @@ class TestBinarySearchTreeMaxValue(TestCase):
         self.binary_tree = create_binary_tree()
 
     def test_tree_max_value(self):
-        max_leaf = BinarySearchTree.tree_max_value(self.binary_tree.root)
-        self.assertEqual(max_leaf.value, 7)
+        parent, direction, node = BinarySearchTree.tree_max_value(
+            self.binary_tree, "root"
+        )
+        self.assertEqual(parent, self.binary_tree.root.right)
+        self.assertEqual(direction, "right")
+        self.assertEqual(node.value, 7)
 
     def test_tree_max_value_with_single_value(self):
         single_value_tree = BinarySearchTree(BinarySearchTreeNode(50))
-        max_leaf = BinarySearchTree.tree_max_value(single_value_tree.root)
-        self.assertEqual(max_leaf.value, 50)
+        parent, direction, node = BinarySearchTree.tree_max_value(
+            single_value_tree,
+            "root",
+        )
+        self.assertEqual(parent, single_value_tree)
+        self.assertEqual(direction, "root")
+        self.assertEqual(node.value, 50)
 
     @patch("trees.binary_trees.BinarySearchTree.tree_max_value")
     def test_max_value(self, tree_max_value_mock):
@@ -187,7 +196,10 @@ class TestBinarySearchTreeMaxValue(TestCase):
         return_value = self.binary_tree.max_value()
 
         self.assertEqual(expected_return_value, return_value)
-        tree_max_value_mock.assert_called_once_with(self.binary_tree.root)
+        tree_max_value_mock.assert_called_once_with(
+            self.binary_tree,
+            "root"
+        )
 
 
 class TestBinarySearchTreeRemove(TestCase):
