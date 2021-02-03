@@ -61,6 +61,18 @@ class BinarySearchTree:
     def post_order_traversal(self):
         BinarySearchTree.tree_post_order_traversal(self.root)
 
+    def tree_print(node, identifier, level):
+        element = f"{identifier}{node.value}"
+        spaces = 0 if level < 2 else len(element) - 1 + level * 2
+        print(f"{element:>{spaces}}")
+        if node.left:
+            BinarySearchTree.tree_print(node.left, "|-L:", level + 1)
+        if node.right:
+            BinarySearchTree.tree_print(node.right, "|-R:", level + 1)
+
+    def print(self):
+        BinarySearchTree.tree_print(self.root, "", 0)
+
     @staticmethod
     def binary_tree_search(tree, direction, value):
         sub_tree = getattr(tree, direction)

@@ -88,6 +88,35 @@ class TestBinarySearchTreeTraversal(TestCase):
         )
 
 
+class TestBinarySearchTreePrint(TestCase):
+    def setUp(self):
+        self.binary_tree = create_binary_tree()
+
+    @patch("builtins.print")
+    def test_tree_print(self, print_mock):
+        BinarySearchTree.tree_print(
+            self.binary_tree.root,
+            "",
+            0
+        )
+        self.assertEqual(print_mock.mock_calls, [
+            call("4"),
+            call("|-L:2"),
+            call("   |-L:1"),
+            call("   |-R:3"),
+            call("|-R:6"),
+            call("   |-L:5"),
+            call("   |-R:7"),
+        ])
+
+    @patch("trees.binary_trees.BinarySearchTree.tree_print")
+    def test_print(self, tree_print_mock):
+        self.binary_tree.print()
+        tree_print_mock.assert_called_once_with(
+            self.binary_tree.root, "", 0
+        )
+
+
 class TestBinarySearchTreeSearch(TestCase):
     def setUp(self):
         self.binary_tree = create_binary_tree()
