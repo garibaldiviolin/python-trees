@@ -262,3 +262,28 @@ class TestBinarySearchTreeRemove(TestCase):
                 if number != 4
             ]
         )
+
+
+class TestBinarySearchTreeRotateLeft(TestCase):
+    def setUp(self):
+        self.binary_tree = create_binary_tree()
+
+    @patch("builtins.print")
+    def test_rotate_root_left(self, print_mock):
+        left_node = self.binary_tree.root
+        right_node = self.binary_tree.root.right
+
+        self.binary_tree.rotate_left(
+            self.binary_tree,
+            "root",
+            left_node,
+            right_node,
+        )
+        self.assertEqual(self.binary_tree.root, right_node)
+        self.assertEqual(self.binary_tree.root.left, left_node)
+
+        self.binary_tree.in_order_traversal()
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(1, 8)]
+        )
