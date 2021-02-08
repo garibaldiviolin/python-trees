@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import call, patch
 
-from .fixtures import create_binary_tree
+from .fixtures import create_binary_search_tree
 from trees.binary_search_trees import BinarySearchTree, BinarySearchTreeNode
 
 
@@ -38,7 +38,7 @@ class TestBinarySearchTreeClass(TestCase):
 
 class TestBinarySearchTreeTraversal(TestCase):
     def setUp(self):
-        self.binary_tree = create_binary_tree()
+        self.binary_tree = create_binary_search_tree()
 
     @patch("builtins.print")
     def test_post_order_traversal(self, print_mock):
@@ -96,7 +96,7 @@ class TestBinarySearchTreeTraversal(TestCase):
 
 class TestBinarySearchTreePrint(TestCase):
     def setUp(self):
-        self.binary_tree = create_binary_tree()
+        self.binary_tree = create_binary_search_tree()
 
     @patch("builtins.print")
     def test_tree_print(self, print_mock):
@@ -125,7 +125,7 @@ class TestBinarySearchTreePrint(TestCase):
 
 class TestBinarySearchTreeSearch(TestCase):
     def setUp(self):
-        self.binary_tree = create_binary_tree()
+        self.binary_tree = create_binary_search_tree()
 
     def test_binary_tree_search_in_left_subtree(self):
         expected_leaf = self.binary_tree.root.left
@@ -174,7 +174,7 @@ class TestBinarySearchTreeSearch(TestCase):
 
 class TestBinarySearchTreeAdd(TestCase):
     def setUp(self):
-        self.binary_tree = create_binary_tree()
+        self.binary_tree = create_binary_search_tree()
 
     @patch("builtins.print")
     def test_tree_add_left(self, print_mock):
@@ -204,7 +204,7 @@ class TestBinarySearchTreeAdd(TestCase):
 
 class TestBinarySearchTreeMaxValue(TestCase):
     def setUp(self):
-        self.binary_tree = create_binary_tree()
+        self.binary_tree = create_binary_search_tree()
 
     def test_tree_max_value(self):
         parent, direction, node = BinarySearchTree.tree_max_value(
@@ -239,7 +239,7 @@ class TestBinarySearchTreeMaxValue(TestCase):
 
 class TestBinarySearchTreeRemove(TestCase):
     def setUp(self):
-        self.binary_tree = create_binary_tree()
+        self.binary_tree = create_binary_search_tree()
 
     def test_remove_value_not_found(self):
         removed = self.binary_tree.remove(1000)
@@ -301,7 +301,7 @@ class TestBinarySearchTreeRemove(TestCase):
 
 class TestBinarySearchTreeRotateLeft(TestCase):
     def setUp(self):
-        self.binary_tree = create_binary_tree()
+        self.binary_tree = create_binary_search_tree()
 
     @patch("builtins.print")
     def test_rotate_root_left(self, print_mock):
@@ -326,7 +326,7 @@ class TestBinarySearchTreeRotateLeft(TestCase):
 
 class TestBinarySearchTreeRotateRight(TestCase):
     def setUp(self):
-        self.binary_tree = create_binary_tree()
+        self.binary_tree = create_binary_search_tree()
 
     @patch("builtins.print")
     def test_rotate_root_right(self, print_mock):

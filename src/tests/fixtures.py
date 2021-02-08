@@ -1,7 +1,7 @@
 from trees.binary_search_trees import BinarySearchTree, BinarySearchTreeNode
 
 
-def create_binary_tree():
+def create_binary_search_tree():
     leaf = BinarySearchTreeNode(1)
     leaf2 = BinarySearchTreeNode(3)
     leaf3 = BinarySearchTreeNode(5)
