@@ -93,18 +93,19 @@ class BinarySearchTree:
         return BinarySearchTree.binary_tree_search(self, "root", value)
 
     @staticmethod
-    def tree_add(tree, value):
-        if tree.value < value:
-            if tree.right is not None:
-                return BinarySearchTree.tree_add(tree.right, value)
-            tree.right = BinarySearchTreeNode(value)
+    def tree_add(tree, direction, value):
+        node = getattr(tree, direction)
+        if not node:
+            setattr(tree, direction, BinarySearchTreeNode(value))
+            return
+
+        if node.value < value:
+            return BinarySearchTree.tree_add(node, "right", value)
         else:
-            if tree.left is not None:
-                return BinarySearchTree.tree_add(tree.left, value)
-            tree.left = BinarySearchTreeNode(value)
+            return BinarySearchTree.tree_add(node, "left", value)
 
     def add(self, value):
-        return BinarySearchTree.tree_add(self.root, value)
+        return BinarySearchTree.tree_add(self, "root", value)
 
     @staticmethod
     def tree_max_value(parent, direction):
