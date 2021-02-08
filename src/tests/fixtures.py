@@ -1,4 +1,4 @@
-from trees.binary_trees import BinarySearchTree, BinarySearchTreeNode
+from trees.binary_search_trees import BinarySearchTree, BinarySearchTreeNode
 
 
 def create_binary_tree():
