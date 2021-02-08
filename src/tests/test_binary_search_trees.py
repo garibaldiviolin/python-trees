@@ -197,7 +197,7 @@ class TestBinarySearchTreeAdd(TestCase):
         )
 
     @patch("trees.binary_search_trees.BinarySearchTree.tree_add")
-    def test_search(self, tree_add_mock):
+    def test_add(self, tree_add_mock):
         self.tree.add(7)
         tree_add_mock.assert_called_once_with(self.tree.root, 7)
 
