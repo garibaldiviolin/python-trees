@@ -308,7 +308,7 @@ class TestBinarySearchTreeRotateLeft(TestCase):
         left_node = self.tree.root
         right_node = self.tree.root.right
 
-        self.tree.rotate_left(
+        BinarySearchTree.rotate_left(
             self.tree,
             "root",
             left_node,
@@ -333,7 +333,7 @@ class TestBinarySearchTreeRotateRight(TestCase):
         left_node = self.tree.root.left
         right_node = self.tree.root
 
-        self.tree.rotate_right(
+        BinarySearchTree.rotate_right(
             self.tree,
             "root",
             left_node,
