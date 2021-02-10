@@ -11,8 +11,6 @@ from .test_binary_search_trees import (
     TestBinarySearchTreeSearch,
     TestBinarySearchTreeMaxValue,
     TestBinarySearchTreeRemove,
-    TestBinarySearchTreeRotateLeft,
-    TestBinarySearchTreeRotateRight,
 )
 
 
