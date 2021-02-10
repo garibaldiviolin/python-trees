@@ -52,22 +52,42 @@ class AVLTree(BinarySearchTree):
             AVLTree.tree_add(node, "right", value)
             if AVLTree.height(node.right) - AVLTree.height(node.left) == 2:
                 if value > node.right.value:
-                    node = AVLTree.rotate_left(
+                    AVLTree.rotate_left(
                         tree, direction, node, node.right
                     )
                 else:
-                    node = AVLTree.rotate_right()
-                    node = AVLTree.rotate_left()
+                    AVLTree.rotate_right(
+                        node,
+                        "right",
+                        node.right.left,
+                        node.right,
+                    )
+                    node = AVLTree.rotate_left(
+                        tree,
+                        direction,
+                        node,
+                        node.right,
+                    )
         else:
             AVLTree.tree_add(node, "left", value)
             if AVLTree.height(node.left) - AVLTree.height(node.right) == 2:
                 if value < node.left.value:
-                    node = AVLTree.rotate_right(
+                    AVLTree.rotate_right(
                         tree, direction, node.left, node
                     )
                 else:
-                    node = AVLTree.rotate_left()
-                    node = AVLTree.rotate_right()
+                    AVLTree.rotate_left(
+                        node,
+                        "left",
+                        node.left,
+                        node.left.right,
+                    )
+                    AVLTree.rotate_right(
+                        tree,
+                        direction,
+                        node.left,
+                        node,
+                    )
 
         node = getattr(tree, direction)
         node.height = max(
