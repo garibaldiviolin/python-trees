@@ -72,6 +72,26 @@ class TestAVLTreeAdd(TestCase):
         )
 
     @patch("builtins.print")
+    def test_tree_add_with_right_rotation(self, print_mock):
+        AVLTree.tree_add(self.tree, "root", 0)
+        AVLTree.tree_add(self.tree, "root", -1)
+        AVLTree.tree_in_order_traversal(self.tree.root)
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(-1, 8)]
+        )
+
+    @patch("builtins.print")
+    def test_tree_add_with_left_right_rotations(self, print_mock):
+        AVLTree.tree_add(self.tree, "root", -1)
+        AVLTree.tree_add(self.tree, "root", 0)
+        AVLTree.tree_in_order_traversal(self.tree.root)
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(-1, 8)]
+        )
+
+    @patch("builtins.print")
     def test_tree_add_right(self, print_mock):
         self.tree.root.left.left.value = 0  # replace 1 to test
         AVLTree.tree_add(self.tree, "root", 1)
@@ -79,6 +99,26 @@ class TestAVLTreeAdd(TestCase):
         self.assertEqual(
             print_mock.mock_calls,
             [call(number, end="-") for number in range(0, 8)]
+        )
+
+    @patch("builtins.print")
+    def test_tree_add_with_left_rotation(self, print_mock):
+        AVLTree.tree_add(self.tree, "root", 8)
+        AVLTree.tree_add(self.tree, "root", 9)
+        AVLTree.tree_in_order_traversal(self.tree.root)
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(1, 10)]
+        )
+
+    @patch("builtins.print")
+    def test_tree_add_with_right_left_rotation(self, print_mock):
+        AVLTree.tree_add(self.tree, "root", 9)
+        AVLTree.tree_add(self.tree, "root", 8)
+        AVLTree.tree_in_order_traversal(self.tree.root)
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(1, 10)]
         )
 
     @patch("trees.avl_trees.AVLTree.tree_add")
