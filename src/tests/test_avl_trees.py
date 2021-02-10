@@ -159,3 +159,17 @@ class TestAVLTreeRotateRight(TestCase):
 
         self.assertEqual(self.tree.root.height, 1)
         self.assertEqual(self.tree.root.right.height, 0)
+
+
+class TestAVLTreeHeight(TestCase):
+    def test_height(self):
+        root = AVLTreeNode(3)
+        root.height = 50
+        tree = AVLTree(root)
+
+        self.assertEqual(AVLTree.height(tree.root), 50)
+
+    def test_height_with_null_node(self):
+        tree = AVLTree(None)
+
+        self.assertEqual(AVLTree.height(tree.root), -1)
