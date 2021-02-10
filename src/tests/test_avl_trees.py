@@ -99,9 +99,63 @@ class TestAVLTreeRemove(TestBinarySearchTreeRemove):
 
 class TestAVLTreeRotateLeft(TestBinarySearchTreeRotateLeft):
     def setUp(self):
-        self.tree = create_avl_tree()
+        root_node = AVLTreeNode(4)
+        root_node.height = 1
+        root_node.right = AVLTreeNode(5)
+        root_node.right.height = 0
+        self.tree = AVLTree(root_node)
+
+    @patch("builtins.print")
+    def test_rotate_root_left(self, print_mock):
+        left_node = self.tree.root
+        right_node = self.tree.root.right
+
+        AVLTree.rotate_left(
+            self.tree,
+            "root",
+            left_node,
+            right_node,
+        )
+        self.assertEqual(self.tree.root, right_node)
+        self.assertEqual(self.tree.root.left, left_node)
+
+        self.tree.in_order_traversal()
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(4, 6)]
+        )
+
+        self.assertEqual(self.tree.root.height, 1)
+        self.assertEqual(self.tree.root.left.height, 0)
 
 
-class TestAVLTreeRotateRight(TestBinarySearchTreeRotateRight):
+class TestAVLTreeRotateRight(TestCase):
     def setUp(self):
-        self.tree = create_avl_tree()
+        root_node = AVLTreeNode(5)
+        root_node.height = 1
+        root_node.left = AVLTreeNode(4)
+        root_node.left.height = 0
+        self.tree = AVLTree(root_node)
+
+    @patch("builtins.print")
+    def test_rotate_root_right(self, print_mock):
+        left_node = self.tree.root.left
+        right_node = self.tree.root
+
+        AVLTree.rotate_right(
+            self.tree,
+            "root",
+            left_node,
+            right_node,
+        )
+        self.assertEqual(self.tree.root, left_node)
+        self.assertEqual(self.tree.root.right, right_node)
+
+        self.tree.in_order_traversal()
+        self.assertEqual(
+            print_mock.mock_calls,
+            [call(number, end="-") for number in range(4, 6)]
+        )
+
+        self.assertEqual(self.tree.root.height, 1)
+        self.assertEqual(self.tree.root.right.height, 0)
