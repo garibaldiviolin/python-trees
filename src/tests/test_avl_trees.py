@@ -137,7 +137,7 @@ class TestAVLTreeRemove(TestBinarySearchTreeRemove):
         self.tree = create_avl_tree()
 
 
-class TestAVLTreeRotateLeft(TestBinarySearchTreeRotateLeft):
+class TestAVLTreeRotateLeft(TestCase):
     def setUp(self):
         root_node = AVLTreeNode(4)
         root_node.height = 1
